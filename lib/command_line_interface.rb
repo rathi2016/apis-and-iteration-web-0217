@@ -1,5 +1,8 @@
 def welcome
-  # puts out a welcome message here!
+
+puts "*****************************"
+puts "Feel free to pick a character and knw abt it "
+
 end
 
 def get_character_from_user

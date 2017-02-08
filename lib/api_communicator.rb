@@ -3,20 +3,24 @@ require 'json'
 require 'pry'
 
 def get_character_movies_from_api(character)
-  #make the web request
+
   all_characters = RestClient.get('http://www.swapi.co/api/people/')
   character_hash = JSON.parse(all_characters)
     empty =[]
   character_hash["results"].each do |ele|
-    ele.each do |k,v|
-      if ele[k] == character
+
+
+
+      if ele["name"].downcase == character
         film_arr =  ele["films"]
+
         film_arr.each do |arr|
           api_call = RestClient.get(arr)
           jason_call = JSON.parse(api_call)
           empty << jason_call
+
         end
-      end
+
     end
   end
     # binding.pry
@@ -35,19 +39,20 @@ end
   #  of movies by title. play around with puts out other info about a given film.
 
 def parse_character_movies(films_hash)
- count = 0
-  films_hash.each.with_index do |film_detail,idx|
+
+  films_hash.each.with_index(1) do |film_detail,idx|
 
   film_detail.each do |k,v|
 
-    puts "#{count += 1} #{v}"  if k == "title"
+    puts "#{idx} #{v}"  if k == "title"
   end
   end
-  
+
   # some iteration magic and puts out the movies in a nice list
 end
 
 def show_character_movies(character)
+
   films_hash = get_character_movies_from_api(character)
   parse_character_movies(films_hash)
 end
